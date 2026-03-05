@@ -8,9 +8,23 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        brand: {
+          indigo: "#4F46E5",
+          purple: "#7C3AED",
+          pink: "#EC4899",
+        }
       },
+      borderRadius: {
+        xl: "16px",
+        "2xl": "24px"
+      },
+      fontFamily: {
+        sans: ["Inter", "sans-serif"]
+      },
+      backgroundImage: {
+        'brand-gradient':
+          'linear-gradient(to right, #4F46E5, #7C3AED, #EC4899)'
+      }
     },
   },
   plugins: [],

@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: edunova
+spec:
+  replicas: 25
+  selector:
+    matchLabels:
+      app: edunova
+  template:
+    metadata:
+      labels:
+        app: edunova
+    spec:
+      containers:
+        - name: edunova
+          image: edunova:latest
+          ports:
+            - containerPort: 3000
