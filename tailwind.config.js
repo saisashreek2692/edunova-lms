@@ -15,15 +15,17 @@ module.exports = {
         }
       },
       borderRadius: {
-        xl: "16px",
-        "2xl": "24px"
+        xl: '1rem',
+        '2xl': '1.5rem'
       },
       fontFamily: {
         sans: ["Inter", "sans-serif"]
       },
+      boxShadow: {
+        soft: '0 10px 25px rgba(0,0,0,0.05)'
+      },
       backgroundImage: {
-        'brand-gradient':
-          'linear-gradient(to right, #4F46E5, #7C3AED, #EC4899)'
+        'brand-gradient': 'linear-gradient(to right, #4F46E5, #7C3AED, #EC4899)'
       }
     },
   },
