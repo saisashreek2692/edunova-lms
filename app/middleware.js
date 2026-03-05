@@ -1,12 +1,26 @@
-import { NextResponse } from "next/server";
-import { jwtVerify } from "jose";
+import { NextResponse } from 'next/server'
+import { verifyAccessToken } from './lib/jwt'
 
-export async function middleware(req) {
-  const token = req.cookies.get("accessToken")?.value;
+export function middleware(req) {
+  const token = req.cookies.get('accessToken')?.value
 
-  if (!token && req.nextUrl.pathname.startsWith("/dashboard")) {
-    return NextResponse.redirect(new URL("/login", req.url));
+  const protectedRoutes = ['/dashboard']
+
+  if (
+    protectedRoutes.some(route =>
+      req.nextUrl.pathname.startsWith(route)
+    )
+  ) {
+    if (!token) {
+      return NextResponse.redirect(new URL('/login', req.url))
+    }
+
+    try {
+      verifyAccessToken(token)
+    } catch {
+      return NextResponse.redirect(new URL('/login', req.url))
+    }
   }
 
-  return NextResponse.next();
+  return NextResponse.next()
 }

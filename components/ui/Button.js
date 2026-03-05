@@ -1,20 +1,24 @@
-"use client";
-import { motion } from "framer-motion";
-import clsx from "clsx";
+'use client'
+import { motion } from 'framer-motion'
+import clsx from 'clsx'
 
 export default function Button({
   children,
-  variant = "primary",
+  variant = 'primary',
   className,
   ...props
 }) {
-  const base = "px-6 py-3 rounded-xl font-medium transition-all duration-200";
+  const base =
+    'px-6 py-3 rounded-xl font-medium transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500'
 
   const variants = {
-    primary: "bg-brand-gradient text-white shadow-lg hover:scale-105",
-    secondary: "border border-gray-300 text-gray-700 hover:bg-gray-100",
-    ghost: "text-gray-700 hover:bg-gray-100",
-  };
+    primary:
+      'bg-brand-gradient text-white shadow-soft hover:scale-[1.02]',
+    secondary:
+      'border border-gray-300 text-gray-700 hover:bg-gray-100',
+    ghost:
+      'text-gray-600 hover:bg-gray-100'
+  }
 
   return (
     <motion.button
@@ -24,5 +28,5 @@ export default function Button({
     >
       {children}
     </motion.button>
-  );
+  )
 }

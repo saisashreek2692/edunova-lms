@@ -1,25 +1,36 @@
-import { NextResponse } from "next/server";
-import { generateAccessToken } from "@/lib/auth";
+import { NextResponse } from 'next/server'
+import bcrypt from 'bcryptjs'
+import {
+  generateAccessToken,
+  generateRefreshToken
+} from '@/lib/jwt'
+import { setAuthCookies } from '@/lib/cookies'
 
 export async function POST(req) {
-  const { email, password } = await req.json();
+  const { email, password } = await req.json()
 
-  if (email === "admin@edunova.com") {
-    const accessToken = await generateAccessToken({
-      role: "admin",
-      email
-    });
-
-    const response = NextResponse.json({ success: true });
-
-    response.cookies.set("accessToken", accessToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "strict"
-    });
-
-    return response;
+  // Replace with DB lookup
+  const user = {
+    id: 1,
+    email,
+    role: 'student'
   }
 
-  return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
+  const valid = await bcrypt.compare(password, await bcrypt.hash(password, 10))
+
+  if (!valid) {
+    return NextResponse.json(
+      { message: 'Invalid credentials' },
+      { status: 401 }
+    )
+  }
+
+  const accessToken = generateAccessToken(user)
+  const refreshToken = generateRefreshToken(user)
+
+  const response = NextResponse.json({ message: 'Login success' })
+
+  setAuthCookies(response, accessToken, refreshToken)
+
+  return response
 }
